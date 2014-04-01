@@ -1,0 +1,15 @@
+Search
+<div class="searchBoxTop" ng-submit="submit()">
+  <form>
+    <input ng-model="address" type="text" name="address" placeholder="Current Address">
+    <select ng-model="time" ng-options="t.text for t in times">
+      <option value="">-- Time --</option>
+    </select>
+    <br/>
+    <input type="submit" value="Submit">
+  </form>
+</div>
+<div ng-repeat="item in results">
+  <a href="{{item.event_url}}" title="{{item.name}}">{{item.name}}</a>
+  <span ng-repeat="food in item.foodProvided">{{food+" "}}</span>
+<div>

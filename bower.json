@@ -1,0 +1,17 @@
+{
+  "name": "Food For The People",
+  "version": "0.8.0",
+  "authors": [
+    "Rob Graeber <bgraeber@gmail.com>"
+  ],
+  "description": "Meetup Free Food Searcher",
+  "license": "MIT",
+  "private": true,
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests"
+  ]
+}

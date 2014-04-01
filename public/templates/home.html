@@ -1,0 +1,11 @@
+Home
+<div class="searchBox" ng-submit="submit()">
+  <form>
+    <input ng-model="address" type="text" name="address" placeholder="Nearest Address or Zip">
+    <select ng-model="time" ng-options="t.text for t in times">
+      <option value="">-- Time --</option>
+    </select>
+    <br/>
+    <input type="submit" value="Submit">
+  </form>
+</div>

@@ -16,6 +16,7 @@ exports.regexpList = [
   /pastr(y|ies)/i,
   /refreshments?/i,
   /cookies?/i,
+  /grub/i,
 ];
 exports.normalList = [
  "burger",
@@ -27,6 +28,5 @@ exports.normalList = [
  "beer",
  "beers",
  "sushi",
-
-
+ "grub",
 ];

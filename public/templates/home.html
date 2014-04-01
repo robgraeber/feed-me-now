@@ -1,16 +1,18 @@
-<div class="outer">
-  <div class="inner" >
-    <div class="logoTextBig">
-      <b>Feed Me!</b>
+<div class="mainHome">
+  <div class="outer">
+    <div class="inner">
+      <a href="#" class="logoTextBig">
+        <b>Feed Me!</b>
+      </a>
+      <form ng-submit="submit()">
+        <div class="searchBox">
+          <input class="searchText" ng-model="address" type="text" name="address" placeholder="Nearest Address or Zip">
+          <select class="searchSelect" ng-model="time" ng-options="t.text for t in times">
+            <option value="">-- Time --</option>
+          </select>
+        </div>
+        <input class="searchBtn searchBtnAdjust" type="submit" value="Submit">
+      </form>
     </div>
-    <form ng-submit="submit()">
-      <div class="searchBox">
-        <input class="searchText" ng-model="address" type="text" name="address" placeholder="Nearest Address or Zip">
-        <select class="searchSelect" ng-model="time" ng-options="t.text for t in times">
-          <option value="">-- Time --</option>
-        </select>
-      </div>
-      <input class="searchBtn" type="submit" value="Submit">
-    </form>
   </div>
 </div>

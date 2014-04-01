@@ -86,7 +86,7 @@ app.get('/results', function(req, res){
           }
         });
         foodProvided = _.map(foodProvided, function(food){
-          return food.toLowerCase();
+          return food.toLowerCase().trim();
         });
         item.foodProvided = foodProvided;
         return hasFood;

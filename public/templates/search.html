@@ -1,16 +1,23 @@
-Search
-<div class="searchBoxTop" ng-submit="submit()">
-  <form>
-    <input ng-model="address" type="text" name="address" placeholder="Current Address">
-    <select ng-init="initTime()" ng-model="time" ng-options="t.text for t in times">
+<div class="searchBoxTop" >
+  <form ng-submit="submit()">
+    <a href="#" class="logoTextSmall">
+      <b>Feed Me!</b>
+    </a>
+    <input class="searchText" ng-model="address" type="text" name="address" placeholder="Nearest Address or Zip">
+    <select class="searchSelect" ng-model="time" ng-options="t.text for t in times">
       <option value="">-- Time --</option>
     </select>
-    <br/>
-    <input type="submit" value="Submit">
+    <input class="searchBtn" type="submit" value="Submit">
   </form>
 </div>
-<div ng-repeat="item in results">
-  <a href="{{item.event_url}}" title="{{item.name}}">{{item.name}}</a>
-  <span ng-repeat="food in item.foodProvided">{{food+" "}}</span>
-  - {{moment(item.time).format("hh:mm a")}}
-<div>
+
+<div class="searchResults">
+  <div class="searchItem" ng-repeat="item in results">
+    <a class="searchItemTitle" href="{{item.event_url}}" title="{{item.name}}">{{item.name}}</a>
+    <br/>
+    <span class="searchItemTime">{{moment(item.time).format("h:mm a")}}</span>
+    <div class="searchItemFoodHolder">
+      <span class="searchItemFood" ng-repeat="food in item.foodProvided">{{food}}</span>
+    </div>
+  <div>
+</div>

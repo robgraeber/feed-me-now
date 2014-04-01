@@ -32,7 +32,12 @@ if ('development' == app.get('env')) {
 
 app.get('/results', function(req, res){
   var address = req.query.address || "";
-  var time = req.query.time || "12:00";
+  var time;
+  if(!req.query.time || req.query.time === "undefined"){
+    time = (new Date()).getTime(); //set to current time if undefined
+  }else{
+    time = req.query.time;
+  }
   var radius = req.query.radius || 5;
   var googleApiKey = config.googleApiKey;
   var meetupApiKey = config.meetupApiKey;
@@ -55,32 +60,41 @@ app.get('/results', function(req, res){
       return;
     }
     console.log("Lat:", data.lat, "Long:", data.lng, "Status: OK");
-    request.getAsync({url:"https://api.meetup.com/2/open_events.json", qs:{key:meetupApiKey, lat:data.lat, lon:data.lng, radius:radius}})
+    //searches meetup api with lat, lon, and time to be minus 5 hours of setting. Time gets hard filtered elsewhere.
+    request.getAsync({url:"https://api.meetup.com/2/open_events.json", qs:{key:meetupApiKey, lat:data.lat, lon:data.lng, radius:"smart", limited_events:"false", text_format:"plain", time:time-5*60*60*1000+","}})
     .then(function(response){
       var body = JSON.parse(response[0].body);
+      console.log("Meetup result count:", body.results.length);
       var results = _.filter(body.results, function(item){
         return !item.fee && item.yes_rsvp_count >= 20;
       });
-      console.log((new Date()).getTime());
+      //filters for foods terms and adds to list
       results = _.filter(results, function(item){
         var hasFood = false;
         var foodProvided = [];
 
         _.each(foodPhrases.regexpList, function(regexp){
+          if(!item.description){
+            return;
+          }
           var matches = item.description.match(regexp);
           if(matches){
             hasFood = true;
             foodProvided = foodProvided.concat(matches);
           }
         });
-        _.each(foodProvided, function(food){
-          food = food.toLowerCase();
+        foodProvided = _.map(foodProvided, function(food){
+          return food.toLowerCase();
         });
         item.foodProvided = foodProvided;
         return hasFood;
       });
+      //filters for excluded terms
       results = _.filter(results, function(item){
         var isValid = true;
+        if(!item.description){
+          return;
+        }
         _.each(excludedPhrases.regexpList, function(regexp){
           var matches = item.description.match(regexp);
           if(matches){
@@ -89,7 +103,12 @@ app.get('/results', function(req, res){
         });
         return isValid;
       });
-      console.log((new Date()).getTime());
+      //filters for excluded terms
+      results = _.filter(results, function(item){
+        var isValid = true;
+        //filters if search time is after event ended minus 30 minutes
+        return time < item.time + item.duration - 30*60*1000;
+      });
       res.send(200, {results:results, status: "OK"});
     });
   });

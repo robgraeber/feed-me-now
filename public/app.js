@@ -14,16 +14,38 @@ app.config(function($routeProvider) {
     });
 });
 app.service('SearchService', function($http){
+  var timeText, i, timePeriod;
   this.times = [];
-  for(var i = 0; i<48; i++){
-    var timeText = Math.floor(i/2)+":";
-    if(i%2 === 1){
-      timeText += "30";
-    }else {
-      timeText += "00";
+  for(i = 0; i<48; i++){
+    if(i<24){
+      timePeriod = " AM";
+    }else{
+      timePeriod = " PM";
     }
-    this.times.push({text:timeText});
+
+    if(i < 24){
+      if(i <= 1){
+        timeText = 12+":";
+      }else{
+        timeText = Math.floor(i/2)+":";
+      }
+    }else{
+      if(i <= 25){
+        timeText = 12+":";
+      }else{
+        timeText = Math.floor(i/2)-12+":";
+      }
+    }
+    if(i%2 === 1){
+      timeText += "30"+timePeriod;
+    }else {
+      timeText += "00"+timePeriod;
+    }
+    var time = moment(moment().format('LL')+" "+timeText).toDate().getTime();
+    console.log(moment().format('LL')+" "+timeText);
+    this.times.push({text:timeText, time:time});
   }
+ 
   this.searchMe = function(address, time){
     console.log("GET /results from server, address:", address, "time:", time);
     return $http({
@@ -44,13 +66,16 @@ app.controller('HomeController',function($scope, SearchService, $location){
     console.log("Params:", $scope.time);
     $location.path("search");
     $location.search("a", $scope.address);
-    $location.search("t", $scope.time.text);
+    if(!!$scope.time.time){
+      $location.search("t", $scope.time.time+"");
+    }
   };
 });
 app.controller('SearchController',function($scope, SearchService, $location, $routeParams){
   $scope.times = SearchService.times;
   $scope.address = $routeParams.a || "";
   $scope.time = {text:$routeParams.t};
+  $scope.moment = moment;
   SearchService.searchMe($routeParams.a, $routeParams.t).then(function(data){
     console.log("result data:", data);
     $scope.results = data.results;
@@ -58,9 +83,12 @@ app.controller('SearchController',function($scope, SearchService, $location, $ro
 
   $scope.submit = function(){
     //update query parameters and search again
+    console.log("Time:",$scope.time);
     $location.path("search");
     $location.search("a", $scope.address);
-    $location.search("t", $scope.time.text);
+    if(!!$scope.time.time){
+      $location.search("t", $scope.time.time+"");
+    }
   };
 
 

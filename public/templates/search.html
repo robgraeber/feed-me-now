@@ -12,4 +12,5 @@ Search
 <div ng-repeat="item in results">
   <a href="{{item.event_url}}" title="{{item.name}}">{{item.name}}</a>
   <span ng-repeat="food in item.foodProvided">{{food+" "}}</span>
+  - {{moment(item.time).format("hh:mm a")}}
 <div>

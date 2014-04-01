@@ -1,16 +1,74 @@
-body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+html, body{
+    height: 100%;
 }
-
+body {
+  padding: 0;
+  margin: 0;
+  font: 1em "Lucida Grande", Helvetica, Arial, sans-serif;
+  background-image:url("/images/background.jpg");
+  background-size:100% 100%;
+  background-repeat:no-repeat;
+}
 a {
   color: #00B7FF;
 }
+.main{
+  padding: 50px 0;
+}
 .searchBox{
-  width:300px;
-  margin: auto;
+  margin: 5px;
 }
 .searchBoxTop{
   width:300px;
-  margin: auto;
+  /*margin: auto;*/
+}
+.searchText{
+  width: 300px;
+  height: 30px;
+  font-size: .95em;
+}
+.logoTextBig{
+  position:relative;
+  left:7%;
+  margin:5px;
+  font-size:4em;
+  color: #FFFFFF;
+  text-shadow: 1px 1px 1px #000;
+}
+div.outer{
+    display:inline-block;
+    position:relative;
+    left:50%;
+}
+div.inner{
+    position:relative;
+    left:-50%;
+}
+.searchSelect{
+  height: 36px;
+  position: relative;  
+  display: inline-block;  
+  *display: inline;  
+  zoom: 1;  
+  border: 1px solid #aeaeae;  
+  background: #e6e6e6;  
+  background-image: -moz-linear-gradient(top, white, #e6e6e6);  
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, white), color-stop(1, #e6e6e6));  
+  background-image: linear-gradient(top, white, #e6e6e6);  
+  border-radius: 5px; box-shadow: 0 1px 1px #d2d2d2;  
+}
+.searchBtn{
+  position:relative;
+  left:40%;
+  height: 28px;
+  position: relative;  
+  display: inline-block;  
+  *display: inline;  
+  zoom: 1;  
+  border: 1px solid #aeaeae;  
+  background: #e6e6e6;  
+  background-image: -moz-linear-gradient(top, white, #e6e6e6);  
+  background-image: -webkit-gradient(linear, left top, left bottom, color-stop(0, white), color-stop(1, #e6e6e6));  
+  background-image: linear-gradient(top, white, #e6e6e6);  
+  border-radius: 5px; box-shadow: 0 1px 1px #d2d2d2;  
 }

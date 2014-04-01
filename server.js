@@ -64,11 +64,13 @@ app.get('/results', function(req, res){
     request.getAsync({url:"https://api.meetup.com/2/open_events.json", qs:{key:meetupApiKey, lat:data.lat, lon:data.lng, radius:"smart", limited_events:"false", text_format:"plain", time:time-5*60*60*1000+","}})
     .then(function(response){
       var body = JSON.parse(response[0].body);
-      console.log("Meetup result count:", body.results.length);
-      var results = _.filter(body.results, function(item){
+      // console.log("Meetup result count:", body.results.length);
+      var results = body.results;
+      //filters for fees and meetup size
+      results = _.filter(body.results, function(item){
         return !item.fee && item.yes_rsvp_count >= 20;
       });
-      //filters for foods terms and adds to list
+      //filters for foods terms and adds found foods to json
       results = _.filter(results, function(item){
         var hasFood = false;
         var foodProvided = [];
@@ -103,11 +105,19 @@ app.get('/results', function(req, res){
         });
         return isValid;
       });
-      //filters for excluded terms
+      //filters if target time is after event ended (minus 30 minutes)
       results = _.filter(results, function(item){
         var isValid = true;
-        //filters if search time is after event ended minus 30 minutes
         return time < item.time + item.duration - 30*60*1000;
+      });
+      //filters duplicate events that share time and venue name
+      var obj = {};
+      _.each(results, function(item){
+        item.venue = item.venue || {};
+        obj[item.time+""+item.venue.name] = item;
+      });
+      results = _.map(obj, function(value, key){
+        return value;
       });
       res.send(200, {results:results, status: "OK"});
     });

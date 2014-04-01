@@ -42,7 +42,7 @@ app.service('SearchService', function($http){
       timeText += "00"+timePeriod;
     }
     var time = moment(moment().format('LL')+" "+timeText).toDate().getTime();
-    console.log(moment().format('LL')+" "+timeText);
+    // console.log(moment().format('LL')+" "+timeText);
     this.times.push({text:timeText, time:time});
   }
  
@@ -74,7 +74,12 @@ app.controller('HomeController',function($scope, SearchService, $location){
 app.controller('SearchController',function($scope, SearchService, $location, $routeParams){
   $scope.times = SearchService.times;
   $scope.address = $routeParams.a || "";
-  $scope.time = {text:$routeParams.t};
+  for(var i = 0; i < $scope.times.length; i++){
+    if($scope.times[i].time+"" === $routeParams.t){
+      $scope.time = $scope.times[i];
+      break;
+    }
+  }
   $scope.moment = moment;
   SearchService.searchMe($routeParams.a, $routeParams.t).then(function(data){
     console.log("result data:", data);

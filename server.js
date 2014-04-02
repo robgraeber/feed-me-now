@@ -4,7 +4,6 @@
  */
 var express = require('express');
 var Promise = require('bluebird');
-var config = require('./config');
 var foodPhrases = require('./foodPhrases');
 var excludedPhrases = require('./excludedPhrases');
 var http = require('http');
@@ -39,8 +38,8 @@ app.get('/results', function(req, res){
     time = req.query.time;
   }
   var radius = req.query.radius || 5;
-  var googleApiKey = config.googleApiKey;
-  var meetupApiKey = config.meetupApiKey;
+  var googleApiKey = process.env.GOOGLEAPIKEY || "123FAKEKEY";
+  var meetupApiKey = process.env.MEETUPAPIKEY || "123FAKEKEY";
   console.log("address:", address, "time:", time);
   
   request.getAsync({url:"https://maps.googleapis.com/maps/api/geocode/json", qs:{key:googleApiKey, sensor:"false", address:address}})

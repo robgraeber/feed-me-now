@@ -66,9 +66,9 @@ app.get('/results', function(req, res){
       var body = JSON.parse(response[0].body);
       // console.log("Meetup result count:", body.results.length);
       var results = body.results;
-      //filters for fees and meetup size
+      //filters for fees and meetup size and public venue
       results = _.filter(body.results, function(item){
-        return !item.fee && item.yes_rsvp_count >= 20;
+        return !item.fee && item.yes_rsvp_count >= 20 && item.distance; //&& item.venue && item.venue.name;
       });
       //filters for foods terms and adds found foods to json
       results = _.filter(results, function(item){

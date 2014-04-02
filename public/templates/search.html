@@ -12,12 +12,19 @@
 </div>
 
 <div class="searchResults">
-  <div class="searchItem" ng-repeat="item in results">
-    <a class="searchItemTitle" href="{{item.event_url}}" title="{{item.name}}">{{item.name}}</a>
-    <br/>
-    <span class="searchItemTime">{{moment(item.time).format("h:mm a")}}</span>
-    <div class="searchItemFoodHolder">
-      <span class="searchItemFood" ng-repeat="food in item.foodProvided">{{food}}</span>
+  <div ng-repeat="item in results">
+    <div class="searchItemDate" ng-show="item.firstEvent">{{moment(item.time).format("dddd, MMMM Do YYYY")}}</div>
+    <div class="searchItem">
+      <a class="searchItemTitle" href="{{item.event_url}}" title="{{item.name}}">{{item.name}}</a>
+      <br/>
+      <span class="searchItemTime"><b>{{moment(item.time).format("h:mm a")}}</b></span>
+      <div class="searchItemFoodHolder">
+        <span class="searchItemFood" ng-repeat="food in item.foodProvided">{{food}}</span>
+        <span class="searchItemLocation">{{item.venue.address_1+" ("+round(item.distance)+" mi.)"}}</span>
+      </div>
+
     </div>
-  <div>
+  </div>
+  <div class="loadingText" ng-hide="finishedLoading">{{loadingText}}</div>
+  <div class="loadingText">{{errorText}}</div>
 </div>

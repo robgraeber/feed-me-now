@@ -10,4 +10,4 @@ To setup: clone + npm/bower install.
 Demo: http://feedmenow.azurewebsites.net
 
 Run with your api keys to use:   
-GOOGLEAPIKEY="123FakeApiKey" MEETUPAPIKEY="123FakeApiKey" nodemon server.js
+GOOGLEAPIKEY="12345678" MEETUPAPIKEY="12345678" nodemon server.js

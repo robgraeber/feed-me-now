@@ -5,7 +5,7 @@ Meetup Free Food Searcher - 2 day hackathon project built with express, angular,
 
 To setup: clone + npm/bower install.
 
-![](https://dl.dropboxusercontent.com/u/6061717/Screenshot%202014-05-27%2019.13.04.png)
+![](https://cloud.githubusercontent.com/assets/2387719/5312227/cb98884c-7c23-11e4-8a93-acfcd5338683.png)
 
 Demo: http://feedmenow.azurewebsites.net
 
